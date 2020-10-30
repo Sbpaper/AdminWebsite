@@ -1,0 +1,17 @@
+.input{
+    padding: 20px;
+    background-color: #ffffff;
+    // box-shadow: 0px 4px 4px #ececec;
+    border: 1px solid #dfdfdf;
+    margin-bottom: 25px;
+    
+    .l{float: left;margin-right: 10px;}
+    .r{float: right; margin-left: 10px;}
+    .iname{
+        color: rgb(151, 151, 151);font-size: 14px;float: inherit;padding: 10px;
+    }
+}
+
+.drawer-box{
+    margin: 20px;
+}
