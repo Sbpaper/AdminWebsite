@@ -2,7 +2,7 @@
   <div class="layout-header">
     <div class="header">
       <div class="w">
-        <div class="l"><div class="title">LOGO</div></div>
+        <div class="l"><div class="title">Sbpaper 管理中心</div></div>
         <div class="r">
           <el-dropdown class="loginbar">
             <span class="el-dropdown-link">

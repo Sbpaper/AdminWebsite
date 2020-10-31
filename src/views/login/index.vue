@@ -19,7 +19,7 @@
         <div style="text-align: center; margin-top: 110px">
           <el-button
             type="primary"
-            round
+            
             align="center"
             @click.native="loginstart"
             >立即登录</el-button
@@ -74,7 +74,7 @@ export default {
               type: "success",
             });
             signin(res.data.token);
-            this.$router.push({ name: "home" });
+            this.$router.push({ name: "components" });
           } else {
             this.$message({
               message: res.msg,
@@ -124,10 +124,11 @@ body {
     bottom: 0;
     margin: auto;
     border-radius: 3px;
-    width: 300px;
+    max-width: 400px;
+    min-width: 300px;
     height: 300px;
     z-index: 999;
-    padding: 20px;
+    padding: 50px;
   }
   .login-title {
     color: #8a8a8a;
