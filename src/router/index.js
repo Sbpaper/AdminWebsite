@@ -73,6 +73,13 @@ const routes = [
         name: 'articleAdd',
         component: () => import('@/views/Index'),
         meta: {title:'异常文章', icon: 'el-icon-circle-plus', requireAuth: false}
+      },
+      {
+        path: 'itemmanager',
+        name: 'articlemanager',
+        component: () => import('@/views/article/articlemanager.vue'),
+        hidden: true,
+        meta: {title:'文章管理', icon: 'el-icon-circle-plus', requireAuth: false}
       }
     ]
   },

@@ -48,7 +48,7 @@
       </el-option>
     </el-select></div>
 
-    <div class="l"><el-button @click="getList()">查询</el-button></div>
+    <div class="r"><el-button @click="getList()">查询</el-button></div>
 
   </div>
 
@@ -89,7 +89,13 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="maincategory" label="投稿类型" width="100px">
+    <el-table-column prop="verify" label="审核状态" width="100px">
+      <template slot-scope="scope">
+        {{doc.verify[scope.row.verify]}}
+      </template>
+    </el-table-column>
+
+    <el-table-column prop="maincategory" label="分区" width="100px">
       <template slot-scope="scope">
         {{showmaincategory(scope.row.maincategory)}}
       </template>
@@ -99,11 +105,7 @@
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">查看详细</el-button>
-        <!-- <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
+          @click="goarticle(scope.row.id)">查看详细</el-button>
       </template>
     </el-table-column>
 
@@ -136,7 +138,7 @@ export default {
         querypage: 1,
         perpage: 10,
         userid: null,
-        verify: 1,
+        verify: 100,
         is_delete: false
       },
       options: {
@@ -158,8 +160,12 @@ export default {
         activity: [],
         verify: [
           {
+            value: 100,
+            label: "全部",
+          },
+          {
             value: 0,
-            label: "正常",
+            label: "已通过",
           },
           {
             value: 1,
@@ -184,6 +190,9 @@ export default {
       doc:{
         sourcetype: {
           1: "站内原创", 2:"趣味论文分享", 3: "趣味网文分享" 
+        },
+        verify: {
+          0: "正常", 1: "待审核", 2:"退回"
         }
       },
       tableData: [],
@@ -195,6 +204,10 @@ export default {
     Pagination
   },
   methods: {
+    goarticle(id){
+      this.$router.push({ name: 'articlemanager', params: { id: id }})
+      console.log(id)
+    },
     showmaincategory(id){
       for(let item of this.options.maincategory) {
         if(item.id == id){
