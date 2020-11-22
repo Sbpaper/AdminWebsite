@@ -3,12 +3,16 @@
 @import './transition.scss';
 @import './layout.scss';
 @import './input.scss';
+@import './components.scss';
+@import './eledit.scss';
+@import './ui.scss';
 
-
-a, li, ul{
-    text-decoration:none;
-    list-style-type:none;
-  }
+a,
+li,
+ul {
+  text-decoration: none;
+  list-style-type: none;
+}
 
 body {
   margin: 0;
@@ -21,11 +25,34 @@ body {
   font-family: 'Microsoft YaHei', 'Microsoft YaHei UI';
 }
 
-#app {
-  height: 100%;
-}
-
 html {
   height: 100%;
   box-sizing: border-box;
+  font-family: 'Microsoft YaHei', 'Microsoft YaHei UI';
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }

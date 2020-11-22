@@ -1,0 +1,42 @@
+.ui{
+    .box{
+        border: 3px solid #e7eff7;
+        display: flow-root;
+        
+    }
+    .item{
+        margin: 25px;float: left;
+        margin-right: 0;
+        line-height: 60px;
+    }
+    .minpic{
+        float: left;
+        height: 60px;
+        width: auto;
+        img{
+            height: 100%;
+        }
+    }
+    .w10{
+        width: 10%;
+    }
+    .w20{
+        width: 20%;
+    }
+    .w30{
+        width: 30%;
+    }
+}
+
+.module{
+    margin-bottom: 25px;
+    .mtitle{
+        width: 100%;margin-bottom: 10px; font-size: 14px;
+    }
+}
+
+.pagebar-title{
+    font-size: 24px;
+    margin-bottom: 25px;
+    width: 100%;
+}

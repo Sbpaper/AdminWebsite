@@ -1,16 +1,16 @@
 import request from '@/utils/request'
 
-export function QueryArticleList(data) {
+export function Querylist(data) {
     return request({
-        url: '/article/query',
+        url: '/category/querylist',
         method: 'post',
         data: data
     })
 }
 
-export function Admin_QueryArticleList(data) {
+export function Add(data) {
     return request({
-        url: '/article/admin/articlelist',
+        url: '/category/add',
         method: 'post',
         data: data
     })

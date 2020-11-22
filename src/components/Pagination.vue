@@ -90,5 +90,6 @@ export default {
 </script>
 
 <style scoped>
+  .Components-Pagination{margin-top: 25px;}
   .Pagination.Content{margin: 0 auto !important;padding-right: 19px;}
 </style>

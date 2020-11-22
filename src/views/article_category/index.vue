@@ -2,8 +2,7 @@
   <div>
   <el-table
     :data="tableData"
-    style="width: 100%"
-    height="250">
+    style="width: 100%">
     <el-table-column
       fixed
       prop="id"
@@ -36,9 +35,6 @@ export default {
   data() {
     return {
       tableData: [],
-      currentPage: 1, // 当前页码
-      total: 10, // 总条目
-      totalPage: 0, // 总页数
     };
   },
   components: {
@@ -57,10 +53,7 @@ export default {
               message: res.msg,
               type: "success",
             });
-            this.total = res.data.total;
-            this.currentPage = res.data.currentPage;
-            this.totalPage = res.data.totalPages;
-            this.tableData = res.data.result;
+            this.tableData = res.data;
           } else {
             this.$message({
               message: res.msg,

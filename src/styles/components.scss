@@ -1,0 +1,42 @@
+.ModuleBar{
+    display: flow-root;
+    font-size: 18px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    .title{
+        float: left;
+    }
+    .button{
+        float: right;
+    }
+}
+
+.ShowdataMagnet{
+    border: 3px solid #e7eff7;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    border-radius: 3px;
+    margin-bottom: 25px;
+    position: relative;
+    .title{
+        text-align: center;
+        padding: 25px;
+        font-size: 18px;
+        padding-bottom: 0;
+    }
+    .data{
+        text-align: center;
+        padding: 25px;
+        font-size: 24px;
+        color: rgb(45, 154, 255);
+    }
+    .bar{
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        float: right;
+        .button{
+            float: right;margin-left: 10px;
+        }
+    }
+}

@@ -1,6 +1,8 @@
 <template>
+<div>
+  <!-- {{adminstatus}} -->
   <div v-if="!item.hidden" class="menu-wrapper">
-
+    
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
@@ -23,6 +25,33 @@
     </el-submenu>
 
   </div>
+
+  <!-- <div v-if="item.adminpage && !item.hidden && adminstatus=='1' " class="menu-wrapper">
+    
+    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+      <app-link :to="resolvePath(onlyOneChild.path)">
+        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+          <item :meta="Object.assign({},item.meta,onlyOneChild.meta)" />
+        </el-menu-item>
+      </app-link>
+    </template>
+
+    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+      <template slot="title">
+        <item :meta="item.meta" />
+      </template>
+      <sidebar-item
+        v-for="child in item.children"
+        :is-nest="true"
+        :item="child"
+        :key="child.path"
+        :base-path="resolvePath(child.path)"
+        class="nest-menu" />
+    </el-submenu>
+
+  </div> -->
+
+</div>
 </template>
 
 <script>
@@ -47,7 +76,11 @@ export default {
     basePath: {
       type: String,
       default: ''
-    }
+    },
+    adminstatus: {
+      type: String,
+      default: "2"
+    },
   },
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237

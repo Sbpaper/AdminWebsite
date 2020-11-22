@@ -37,7 +37,7 @@ import appmain from './AppMain'
 }
 .content{
     overflow: hidden;
-    width: calc(100% - 220px);
-    margin-left: 220px;
+    width: calc(100% - 250px);
+    margin-left: 250px;
 }
 </style>

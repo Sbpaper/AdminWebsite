@@ -1,33 +1,46 @@
 <template>
-  <div class="Main">
-    <div class="content-main main-content width-normal">
-      <div class="loginbox">
-        <div class="login-title">登录管理后台</div>
-        <el-input
-          v-model="account"
-          class="txt-input"
-          placeholder="账户"
-          prefix-icon="el-icon-user"
-        ></el-input>
-        <el-input
-          v-model="password"
-          class="txt-input"
-          placeholder="密码"
-          prefix-icon="el-icon-key"
-          show-password
-        ></el-input>
-        <div style="text-align: center; margin-top: 110px">
-          <el-button
-            type="primary"
-            
-            align="center"
-            @click.native="loginstart"
-            >立即登录</el-button
-          >
-        </div>
+
+  <div class="pagebody" :style="backgroundDiv">
+
+    <div class="mainbody">
+
+      <div class="imgbox">
+        <img src="@/assets/image/iot3.png" class="logo" />
       </div>
+
+      <div class="loginpopu">
+        <div class="iottxt">智慧农业IOT设备管理中心</div>
+        <div class="loginyouaccounttxt">登录你的管理员账户</div>
+
+            <el-input
+              v-model="account"
+              class="txt-input"
+              placeholder="账户"
+              prefix-icon="el-icon-user"
+            ></el-input>
+
+            <el-input
+              v-model="password"
+              class="txt-input"
+              placeholder="密码"
+              prefix-icon="el-icon-key"
+              show-password
+            ></el-input>
+
+              <el-button
+                type="primary"
+                class="button"
+                align="center"
+                @click.native="loginstart"
+                >立即登录</el-button
+              >
+
+      </div>
+
+
     </div>
   </div>
+
 </template>
 <script>
 import { authAdminLogin } from "@/api/common";
@@ -39,6 +52,7 @@ export default {
     return {
       account: "",
       password: "",
+      backgroundDiv: {backgroundImage: 'url(' + require('@/assets/image/login-background1.png') + ')'}
     };
   },
   methods: {
@@ -73,8 +87,8 @@ export default {
               message: "登录成功",
               type: "success",
             });
-            signin(res.data.token);
-            this.$router.push({ name: "components" });
+            signin(res.data.token, res.data.username, res.data.head, res.data.id, res.data.jurisdiction);
+            this.$router.push({ name: "index" });
           } else {
             this.$message({
               message: res.msg,
@@ -109,42 +123,70 @@ body {
   padding: 0;
   border: 0;
 }
-.Main {
-  min-height: calc(100vh - 0px);
+.pagebody{
   position: relative;
-  overflow: hidden;
   width: 100%;
+  height: 100vh;
+  background-color: #15102c;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.mainbody{
+  width: 80%;
+  height: 75vh;
+  border-radius: 15px;
+  position: absolute;
+  top: 0;left: 0;right: 0;bottom: 0;
+  margin: auto;
+  background-color: #1d0e5a;
+  box-shadow: 0px 15px 20px 4px #151129;
+}
+.imgbox{
+  width: 50%;
   height: 100%;
-  .loginbox {
-    border: 3px solid #f4f4f4;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    border-radius: 3px;
-    max-width: 400px;
-    min-width: 300px;
-    height: 300px;
-    z-index: 999;
-    padding: 50px;
-  }
-  .login-title {
-    color: #8a8a8a;
-    margin: 0;
-    border: 0;
-    width: 100%;
-    padding: 0;
-    font-size: 14px;
-    text-align: center;
-  }
-  .txt-input {
-    position: relative;
-    font-size: 14px;
-    display: inline-block;
-    width: 100%;
-    margin-top: 20px;
-  }
+  position: relative;
+}
+.logo{
+  position: absolute;left: 18%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+}
+.loginpopu{
+  position: absolute;
+  right: 100px;
+  top: 15%;
+  right: 8%;
+  width: 25%;
+}
+.iottxt{
+  font-size: 32px;
+  color: #fff;
+  font-weight: lighter;
+  width: 100%;
+  margin-bottom: 50%;
+}
+.loginyouaccounttxt{
+  margin-top: 100px;
+  font-size: 18px;
+  font-weight: lighter;
+  color: #fff;
+  margin-bottom: 35px;
+}
+.txt-input {
+  position: relative;
+  font-size: 14px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 35px;
+}
+.button{
+  background-color: #1d2774;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  border: 0;
+  // line-height: 50px;
 }
 </style>

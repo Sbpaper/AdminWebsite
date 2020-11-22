@@ -1,2 +1,2 @@
 // 业务服务器
-export const HttpRoot = 'https://www.weivird.com/api'
+export const HttpRoot = 'http://127.0.0.1:8080'

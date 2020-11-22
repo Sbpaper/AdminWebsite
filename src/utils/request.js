@@ -13,9 +13,10 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    var Authorization = getuser();
-    if (Authorization) {
-      config.headers['Authorization'] = Authorization // 让每个请求携带自定义token 请根据实际情况自行修改
+    let Authorization = getuser();
+    console.log("[service.interceptors.request]",Authorization)
+    if (Authorization.Token) {
+      config.headers['Authorization'] = Authorization.Token // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     return config
   },

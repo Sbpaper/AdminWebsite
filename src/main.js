@@ -12,39 +12,28 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
+// router.onError((error) => {
+//   const pattern = /Loading chunk (\d)+ failed/g;
+//   const isChunkLoadFailed = error.message.match(pattern);
+//   const targetPath = router.history.pending.fullPath;
+//   if (isChunkLoadFailed) {
+//     router.replace(targetPath);
+//   }
+// });
 
-
-const whiteList = ['/login','/404', '/index'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
+  console.log('[main.js]UserDATA',getuser())
+  if (to.matched.some(record => record.meta.requireAuth)) {
     let user = getuser()
-    console.log('Token',user)
-    if (user) {
-      if (!user) {
-        if (to.path === '/login') {
-          router.push({ name: "login", params: { msg: "登录失效" } })
-        } else {
-          if (JSON.stringify(to.query || {}) == '{}') {
-            next({path: to.path})
-          } else {
-            next({path: to.path,query: to.query})
-          }
-        }
-      } else {
-        if (to.path === '/login') {
-          router.push({ name: "home" })
-        } else {
-          next()
-        }
-      }
-  
+    if (user.Token) {
+      next()
     } else {
-      if (whiteList.indexOf(to.path) !== -1) {
-        next()
-      } else {
-        router.push({ name: "login", params: { msg: "登录失效" } })
-      }
+      router.push({ name: "login", params: { msg: "登录失效" } })
     }
-  })
+  } else {
+    next()
+  }
+})
 
 Object.defineProperty(Vue.prototype, '$http', {
   value: function(requestPromise, successCallback) {

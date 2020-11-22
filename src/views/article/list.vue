@@ -1,193 +1,219 @@
 <template>
   <div>
-    <el-row class="input">
-      <div class="l">
-        <div class="iname">文章分类</div>
-        <el-radio-group v-model="form.category">
-          <el-radio-button :label="0">全部</el-radio-button>
-          <el-radio-button :label="1">作品</el-radio-button>
-          <el-radio-button :label="2">文章</el-radio-button>
-          <el-radio-button :label="3">项目</el-radio-button>
-        </el-radio-group>
-      </div>
 
-      <div class="l">
-        <div class="iname">返回条数</div>
-        <el-select v-model="form.per_page" placeholder="返回条数">
-          <el-option :label="10" :value="10">10</el-option>
-          <el-option :label="20" :value="20">20</el-option>
-          <el-option :label="30" :value="30">30</el-option>
-        </el-select>
-      </div>
+  <div class="input">
 
-      <el-button type="primary" @click="getList()">查询</el-button>
-    </el-row>
+    <div class="l">
+    <el-input placeholder="请输入内容" v-model="form.keyword">
+      <template slot="prepend">搜索文章标题</template>
+    </el-input></div>
 
-    <el-row class="input">
-      <div class="l">
-        <div class="iname">是否只获取隐藏文章</div>
-        <el-radio-group v-model="form.hidden">
-          <el-radio-button :label="0">全部</el-radio-button>
-          <el-radio-button :label="1">是</el-radio-button>
-        </el-radio-group>
-      </div>
+    <div class="l">
+    <el-select v-model="form.maincategory" placeholder="投稿类目">
+      <el-option
+        v-for="item in options.maincategory"
+        :key="item.id"
+        :label="item.name"
+        :value="item.id">
+      </el-option>
+    </el-select></div>
 
-      <div class="l">
-        <div class="iname">是否只获取首页展示文章</div>
-        <el-radio-group v-model="form.indexshow">
-          <el-radio-button :label="0">全部</el-radio-button>
-          <el-radio-button :label="1">是</el-radio-button>
-        </el-radio-group>
-      </div>
+    <div class="l">
+    <el-select v-model="form.sourcetype" placeholder="投稿类型">
+      <el-option
+        v-for="item in options.sourcetype"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select></div>
 
-      <div class="l" v-if="form.category == 1">
-        <div class="iname">二级分类</div>
-        <el-radio-group v-model="form.subcategory" class="common elmr">
-          <el-radio-button :label="1">设计作品</el-radio-button>
-          <el-radio-button :label="2">视频作品</el-radio-button>
-        </el-radio-group>
-      </div>
-    </el-row>
+    <div class="l">
+    <el-select v-model="form.verify" placeholder="审核状态">
+      <el-option
+        v-for="item in options.verify"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select></div>
 
-    <el-row class="input">
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="id" label="ID" width="50"></el-table-column>
+    <div class="l">
+    <el-select v-model="form.is_delete" placeholder="删除状态">
+      <el-option
+        v-for="item in options.is_delete"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select></div>
 
-        <el-table-column prop="head" label="封面" width="100">
-          <template slot-scope="scope">
-            <el-image
-              style="width: 90%; height: auto"
-              :src="scope.row.cover"
-            ></el-image>
-          </template>
-        </el-table-column>
+    <div class="l"><el-button @click="getList()">查询</el-button></div>
 
-        <el-table-column label="一级分类" width="150">
-          <template slot-scope="scope">
-            <span v-if="scope.row.category == 1">作品</span>
-            <span v-if="scope.row.category == 2">文章</span>
-            <span v-if="scope.row.category == 3">项目</span>
-          </template>
-        </el-table-column>
+  </div>
 
-        <el-table-column label="二级分类" width="150" v-if="form.category == 1">
-          <template slot-scope="scope">
-            <span v-if="scope.row.subcategory == 1">设计作品</span>
-            <span v-if="scope.row.subcategory == 2">视频作品</span>
-          </template>
-        </el-table-column>
+  <el-table
+    :data="tableData"
+    style="width: 100%">
 
-        <el-table-column prop="title" label="标题"></el-table-column>
-        <el-table-column prop="introduce" label="简介"></el-table-column>
+    <el-table-column
+      fixed
+      prop="id"
+      label="文章ID"
+      width="100">
+    </el-table-column>
 
-        <el-table-column label="下架状态" width="100">
-          <template slot-scope="scope">
-            <span v-if="scope.row.hidden == false">上架</span>
-            <span v-if="scope.row.hidden == true">下架</span>
-          </template>
-        </el-table-column>
+    <el-table-column prop="head" label="封面" width="230px">
+      <template slot-scope="scope">
+        <el-image
+          style="width: 100%; height: auto"
+          :src="scope.row.cover"
+        ></el-image>
+      </template>
+    </el-table-column>
 
-        <el-table-column label="首页展示" width="100">
-          <template slot-scope="scope">
-            <span v-if="scope.row.indexshow == false">不展示</span>
-            <span v-if="scope.row.indexshow == true">展示</span>
-          </template>
-        </el-table-column>
+    <el-table-column
+      prop="title"
+      label="文章标题"
+      width="200px">
+    </el-table-column>
 
-        <el-table-column label="更多" width="400px">
-          <template slot-scope="scope">
-            <el-button
-              @click="change({ id: scope.row.id, change: 2 })"
-              v-if="scope.row.hidden == false"
-              type="success"
-              style="margin-right: 10px"
-              >下架</el-button
-            >
-            <el-button
-              @click="change({ id: scope.row.id, change: 2 })"
-              v-if="scope.row.hidden == true"
-              type="info"
-              style="margin-right: 10px"
-              >上架</el-button
-            >
+    <el-table-column
+      prop="introduce"
+      label="文章介绍">
+    </el-table-column>
 
-            <el-button
-              @click="change({ id: scope.row.id, change: 1 })"
-              v-if="scope.row.indexshow == true"
-              type="success"
-              style="margin-right: 10px"
-              >取消首页展示</el-button
-            >
-            <el-button
-              @click="change({ id: scope.row.id, change: 1 })"
-              v-if="scope.row.indexshow == false"
-              style="margin-right: 10px"
-              >首页展示</el-button
-            >
+    <el-table-column prop="sourcetype" label="投稿类型" width="100px">
+      <template slot-scope="scope">
+        {{doc.sourcetype[scope.row.sourcetype]}}
+      </template>
+    </el-table-column>
 
-            <a
-              :href="'/admin/article/edit?id=' + scope.row.id"
-              target="_blank"
-              style="margin-right: 10px"
-              ><el-button>编辑</el-button></a
-            >
+    <el-table-column prop="maincategory" label="投稿类型" width="100px">
+      <template slot-scope="scope">
+        {{showmaincategory(scope.row.maincategory)}}
+      </template>
+    </el-table-column>
 
-            <el-button @click="change({ id: scope.row.id, change: 3 })"
-              >删除</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table></el-row
-    >
+    <el-table-column label="操作" fixed="right" width="200px">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">查看详细</el-button>
+        <!-- <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
+      </template>
+    </el-table-column>
 
-    <el-row class="input">
-      <Pagination
-        @pagination="getList()"
-        :page.sync="currentPage"
-        :pageCount.sync="totalPage"
-        :total.sync="total"
-        v-if="total > 0"
-      />
-    </el-row>
+  </el-table>
+
+  <Pagination
+    @pagination="getList()"
+    :page.sync="form.querypage"
+    :pageCount.sync = totalPage
+    :total.sync="total"
+    v-if="total > 0"
+  />
+
   </div>
 </template>
 
 <script>
+// @ is an alias to /src
+import { Admin_QueryArticleList } from "@/api/article.js";
+import { Querylist } from "@/api/category";
 import Pagination from "@/components/Pagination.vue";
-import { Queryarticle, Putchange } from "@/api/article";
 export default {
-  name: "list",
+  name: "Home",
   data() {
     return {
-      form: {
-        category: 0,
-        subcategory: 0,
-        hidden: 0,
-        indexshow: 0,
-        per_page: 10,
+      form:{
+        maincategory: null,
+        sourcetype: null,
+        keyword: null,
+        querypage: 1,
+        perpage: 10,
+        userid: null,
+        verify: 1,
+        is_delete: false
+      },
+      options: {
+        sourcetype: [
+          {
+            value: 1,
+            label: "站内原创",
+          },
+          {
+            value: 2,
+            label: "趣味论文分享",
+          },
+          {
+            value: 3,
+            label: "趣味网文分享",
+          },
+        ],
+        maincategory: [],
+        activity: [],
+        verify: [
+          {
+            value: 0,
+            label: "正常",
+          },
+          {
+            value: 1,
+            label: "未审核",
+          },
+          {
+            value: 2,
+            label: "被退回",
+          }
+        ],
+        is_delete: [
+          {
+            value: false,
+            label: "正常",
+          },
+          {
+            value: true,
+            label: "被删除",
+          },
+        ]
+      },
+      doc:{
+        sourcetype: {
+          1: "站内原创", 2:"趣味论文分享", 3: "趣味网文分享" 
+        }
       },
       tableData: [],
-      currentPage: null, // 当前页码
-      total: null, // 总条目
-      totalPage: null, // 总页数
+      totalPage: 0, // 总页数
+      total: 0,
     };
   },
+  components: {
+    Pagination
+  },
   methods: {
-    getList() {
+    showmaincategory(id){
+      for(let item of this.options.maincategory) {
+        if(item.id == id){
+          return item.name
+        }
+      }
+    },
+    getList(){
       this.$http(
-        Queryarticle({
-          querypage: this.currentPage,
-          category: this.form.category,
-          subcategory: this.form.subcategory,
-          hidden: this.form.hidden,
-          indexshow: this.form.indexshow,
-          per_page: this.form.per_page,
-        }),
+        Admin_QueryArticleList(this.form),
         (res) => {
           console.log(res);
           if (res.code == 200) {
+            this.$message({
+              message: res.msg,
+              type: "success",
+            });
             this.total = res.data.total;
-            this.currentPage = res.data.currentPage;
+            this.form.querypage = res.data.currentPage;
             this.totalPage = res.data.totalPages;
             this.tableData = res.data.result;
           } else {
@@ -199,12 +225,15 @@ export default {
           }
         }
       );
-    },
-    change(data) {
-      this.$http(Putchange(data), (res) => {
-        console.log(res);
+    }
+  },
+  created() {
+    this.getList();
+    this.$http(
+      Querylist({}),
+      (res) => {
         if (res.code == 200) {
-          this.getList();
+          this.options.maincategory = res.data;
         } else {
           this.$message({
             message: res.msg,
@@ -212,41 +241,10 @@ export default {
             duration: 5 * 1000,
           });
         }
-      });
-    },
-  },
-  components: {
-    Pagination,
-  },
-  created() {
-    this.getList();
-  },
+      }
+    );
+  }
 };
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 100%;
-}
-.rowbtom {
-  margin-bottom: 15px;
-}
+<style lang="scss" scoped>
 </style>

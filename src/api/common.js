@@ -13,7 +13,7 @@ export function upload(data) {
 
 export function authAdminLogin(data) {
     return request({
-        url: '/auth/adminLogin',
+        url: '/login/admin',
         method: 'post',
         data: data
     })

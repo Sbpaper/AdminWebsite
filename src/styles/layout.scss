@@ -7,7 +7,7 @@
 
 .layout-header{
     z-index: 100;
-    background-color: #262F3E;
+    background-color:#131519;
     height: 61px;
     width: 100%;
     position: fixed;
@@ -16,12 +16,51 @@
     }
     .l{float: left;}
     .r{float: right;}
+    .logobox{
+        position: relative;
+        float: left;
+        height: 61px;
+    }
+    .logo{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 40px;
+        height: 40px;
+        padding-left: 0;
+        img{
+            width: 100%;
+        }
+    }
     .title{
+        margin-left: 50px;
+        float: left;
         line-height: 61px;
         font-size: 24px;
         color: #fff;
+        font-weight: lighter;
+    }
+    .userhead{
+        margin: 10px;
+        border-radius: 50px;
+        width: 41px;
+        height: 41px;
+        overflow: hidden;
+        // margin-right: 25px;
+        img{
+            width: 100%;
+        }
+    }
+    .username{
+        line-height: 61px;
+        color: #fff;
+        float: right;
+        margin-right: 25px;
+        font-size: 14px;
     }
     .loginbar{
+        float: right;
         line-height: 61px;
         color: #fff;
     }
